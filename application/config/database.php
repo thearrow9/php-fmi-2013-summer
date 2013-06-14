@@ -49,11 +49,11 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = '';
-$db['default']['password'] = '';
-$db['default']['database'] = '';
-$db['default']['dbdriver'] = 'mysql';
-$db['default']['dbprefix'] = '';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'usilimibasa';
+$db['default']['database'] = 'fmi';
+$db['default']['dbdriver'] = 'mysqli';
+$db['default']['dbprefix'] = 'fmi';
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;
 $db['default']['cache_on'] = FALSE;
