@@ -23,26 +23,25 @@ class Wikiread
 
     function find($string, $params = array())
     {
-        #action=query&list=search&srsearch=wikipedia&srprop=timestamp
         $params = array_merge($this->params, $params);
         $params['list'] = 'search';
         $params['srsearch'] = $this->_escape_string($string);
 
-        $responce = json_decode(file_get_contents($this->host . $this->_params_to_url($params)));
+        $responce = $this->_get_responce($this->host . $this->_params_to_url($params));
         print_r($responce->query->search);
     }
 
     function get($titles, $options = array())
     {
         $this->options = array_merge($this->options, $options);
-
+        echo $titles;
         $params = $this->params;
         $params['titles'] = $this->_escape_string($titles);
+        $params['prop'] = 'revisions';
+        $params['rvprop'] = 'content';
 
-        $url = $this->host . $this->_params_to_url($params);
-        echo $url;
-
-        #$http = new HttpRequest($url);
+        $responce = $this->_get_responce($this->host . $this->_params_to_url($params));
+        print_r($responce);
     }
 
     private function _params_to_url($array = array())
@@ -57,6 +56,12 @@ class Wikiread
     private function _escape_string($string = NULL)
     {
         return urlencode($string);
+    }
+
+    private function _get_responce($url = NULL)
+    {
+        print $url;
+        return json_decode(file_get_contents($url));
     }
 }
 

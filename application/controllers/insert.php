@@ -8,19 +8,14 @@ class Insert extends CI_Controller
         $this->load->library('wikiread');
     }
 
-    function event($event_name, $start_year)
+    function event($title)
     {
-        $url = urlencode($event_name);
-        #$this->wikiread->get('Fifa');
-        $this->wikiread->find('Fifa');
+        $this->wikiread->get('2010 FIFA World Cup');
     }
 
     function suggest_event($event_name, $start_year)
     {
-        $start_year = (int) $start_year;
-        $event_name = urlencode($event_name);
-
-        $this->wikiread->find($event_name, $start_year);
+        $this->wikiread->find((int) $start_year . $event_name);
     }
 }
 
