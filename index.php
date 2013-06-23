@@ -19,6 +19,7 @@
  *
  */
 	define('ENVIRONMENT', 'development');
+    define('SITE_URL', 'http://localhost/fmi_project');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
