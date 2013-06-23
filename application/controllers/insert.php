@@ -5,17 +5,17 @@ class Insert extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->library('wikiread');
+        $this->load->model('wiki');
     }
 
     function event($title)
     {
-        $this->wikiread->get('2010 FIFA World Cup');
+        $this->wiki->get($title);
     }
 
     function suggest_event($event_name, $start_year)
     {
-        $this->wikiread->find((int) $start_year . $event_name);
+        $this->wiki->find((int) $start_year . $event_name);
     }
 }
 

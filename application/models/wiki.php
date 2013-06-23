@@ -1,6 +1,6 @@
 <?php if( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Wikiread
+class Wiki extends CI_Model
 {
     private $host;
     private $options = array();
@@ -8,6 +8,7 @@ class Wikiread
 
     function __construct()
     {
+        parent::__construct();
         $this->host = 'http://wikipedia.org/w/api.php?';
         $this->options = array
         (
@@ -26,9 +27,9 @@ class Wikiread
         $params = array_merge($this->params, $params);
         $params['list'] = 'search';
         $params['srsearch'] = $this->_escape_string($string);
+        $params['srnamespace'] = 0;
 
-        $responce = $this->_get_responce($this->host . $this->_params_to_url($params));
-        print_r($responce->query->search);
+        return $this->_get_responce($this->host . $this->_params_to_url($params));
     }
 
     function get($titles, $options = array())
@@ -40,8 +41,7 @@ class Wikiread
         $params['prop'] = 'revisions';
         $params['rvprop'] = 'content';
 
-        $responce = $this->_get_responce($this->host . $this->_params_to_url($params));
-        print_r($responce);
+        return $this->_get_responce($this->host . $this->_params_to_url($params));
     }
 
     private function _params_to_url($array = array())
@@ -60,7 +60,6 @@ class Wikiread
 
     private function _get_responce($url = NULL)
     {
-        print $url;
         return json_decode(file_get_contents($url));
     }
 }
