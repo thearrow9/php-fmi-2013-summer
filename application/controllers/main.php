@@ -8,6 +8,7 @@ class Main extends CI_Controller
     {
         parent::__construct();
         $this->load->helper('html');
+        $this->load->helper('form');
         $this->_set_defaults();
     }
 

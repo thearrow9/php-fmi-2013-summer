@@ -13,9 +13,10 @@ class Insert extends CI_Controller
         $this->wiki->get($title);
     }
 
-    function suggest_event($event_name, $start_year)
+    function suggest_event()
     {
-        $this->wiki->find((int) $start_year . $event_name);
+        print_r($this->input->post(NULL, TRUE));
+        #$this->wiki->find((int) $start_year . $event_name);
     }
 }
 

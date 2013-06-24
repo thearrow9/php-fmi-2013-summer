@@ -1,3 +1,5 @@
+server = 'http://localhost/fmi_project';
+
 $(document).ready(function()
 {
     $('#event_form').submit(function()
@@ -8,11 +10,11 @@ $(document).ready(function()
 
         $.ajax(
         {
-            type: "",
-            url: "",
-            data: { }
+            type: "POST",
+            url: server + "/index.php/insert/suggest_event/",
+            data: { event_name: event_name }
             }).done(function( msg ) {
-            alert( "Data Saved: " + msg );
+            console.log( "Data Saved: " + msg );
         });
         return false;
     });
