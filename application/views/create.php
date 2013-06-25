@@ -14,3 +14,5 @@
         <input type="submit" value="Създай турнир!" />
     </div>
 </form>
+
+<div id="responce"></div>
