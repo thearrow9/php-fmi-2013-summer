@@ -15,7 +15,13 @@ class Insert extends CI_Controller
 
     function suggest_event()
     {
-        print_r($this->input->post(NULL, TRUE));
+        $data = $this->input->post(NULL, TRUE);
+        $responce = $this->wiki->find($data['start_year'] . ' ' . $data['event_name'], array('srlimit' => $data['limit']));
+
+        $this->load->view('responces/create_event', array(
+            'num_rows' => $data['limit'],
+            'rows'     => $responce['query']['search']
+        ));
         #$this->wiki->find((int) $start_year . $event_name);
     }
 }

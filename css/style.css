@@ -3,6 +3,19 @@ input
     padding: 2px;
 }
 
+#system-message
+{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    margin-left: -100px;
+    width: 200px;
+    background: yellow;
+    text-align: center;
+    color: black;
+}
+
 #responce
 {
     height: 400px;

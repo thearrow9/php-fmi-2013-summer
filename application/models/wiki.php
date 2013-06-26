@@ -60,7 +60,7 @@ class Wiki extends CI_Model
 
     private function _get_responce($url = NULL)
     {
-        return json_decode(file_get_contents($url));
+        return json_decode(file_get_contents($url), TRUE);
     }
 }
 
