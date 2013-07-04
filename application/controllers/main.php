@@ -16,7 +16,8 @@ class Main extends CI_Controller
     {
         $data = array();
         $this->tmp_vars['html'] = $this->load->view('create', $data, TRUE);
-        $this->_push_value('js', 'dev/wiki.js');
+        $this->_push('js', 'dev/wiki.js');
+        $this->_push('js', 'dev/create_event.js');
         $this->_set_vars();
     }
 
@@ -27,7 +28,6 @@ class Main extends CI_Controller
             array('name' => 'robots', 'content' => 'no-cache'),
             array('name' => 'description', 'content' => 'My Great Site'),
             array('name' => 'keywords', 'content' => 'love, passion, intrigue, deception'),
-            array('name' => 'robots', 'content' => 'no-cache'),
             array('name' => 'Content-type', 'content' => 'text/html; charset=utf-8', 'type' => 'equiv')
         );
         $this->tmp_vars['css'] = array('style.css');
@@ -40,7 +40,7 @@ class Main extends CI_Controller
         $this->load->view('template', $this->tmp_vars);
     }
 
-    private function _push_value($array, $value)
+    private function _push($array, $value)
     {
         $this->tmp_vars[$array][] = $value;
     }

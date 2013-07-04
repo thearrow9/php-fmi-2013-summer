@@ -2,7 +2,7 @@
 
 <div>
     <p>Показвам <strong><?=$num_rows;?></strong> предложения.</p>
-    <div id="sugesstions">
+    <div id="event_suggestions">
         <?php
         foreach($rows as $row) : ?>
 
