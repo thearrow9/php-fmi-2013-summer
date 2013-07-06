@@ -18,7 +18,7 @@ class Insert extends CI_Controller
     {
         $title = $this->input->post('title');
         $content = $this->_parse_wiki_content($this->wiki->get($title));
-        echo $content;
+        print_r($content);
     }
 
     function suggest_event()
@@ -35,7 +35,8 @@ class Insert extends CI_Controller
 
     private function _parse_wiki_content($data = array())
     {
-        $content = $data['query']['page'];
+        $content = array_shift($data['query']['pages']);
+        return $content['revisions'][0]['*'];
     }
 }
 

@@ -35,7 +35,7 @@ class Wiki extends CI_Model
     function get($titles, $options = array())
     {
         $this->options = array_merge($this->options, $options);
-        echo '#' . $titles . '--- ';
+
         $params = $this->params;
         $params['titles'] = $this->_escape_string($titles);
         $params['prop'] = 'revisions';
