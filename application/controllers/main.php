@@ -18,6 +18,8 @@ class Main extends CI_Controller
         $this->tmp_vars['html'] = $this->load->view('create', $data, TRUE);
         $this->_push('js', 'dev/wiki.js');
         $this->_push('js', 'dev/create_event.js');
+        $this->_push('css', 'template.css');
+        $this->_push('css', 'form.css');
         $this->_set_vars();
     }
 
@@ -30,8 +32,8 @@ class Main extends CI_Controller
             array('name' => 'keywords', 'content' => 'love, passion, intrigue, deception'),
             array('name' => 'Content-type', 'content' => 'text/html; charset=utf-8', 'type' => 'equiv')
         );
-        $this->tmp_vars['css'] = array('style.css');
         $this->tmp_vars['js'] = array('lib/jquery-2.0.2.min.js');
+        $this->tmp_vars['css'] = array('reset.css');
         $this->tmp_vars['page_title'] = NULL;
     }
 

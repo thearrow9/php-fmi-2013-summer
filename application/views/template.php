@@ -1,5 +1,5 @@
 <?php if( ! defined('BASEPATH')) exit('No direct script access allowed');
-;?><!DOCTYPE html>
+?><!DOCTYPE html>
 <html>
 <head>
 
@@ -7,13 +7,15 @@
 
 <title><?=$page_title;?></title>
 
-<?=build_css_links($css);?>
+<?=build_css($css);?>
 
-<?=build_js_scripts($js);?>
+<?=build_js($js);?>
 
 </head>
 <body>
-    <div id="system-message"></div>
+    <div id="mask"></div>
+    <div id="system_message"></div>
     <?=$html;?>
+    <div id="modal"></div>
 </body>
 </html>

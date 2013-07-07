@@ -1,8 +1,8 @@
 <?php if( ! defined('SITE_URL')) exit('No direct script access allowed');
 
-if( ! function_exists('build_js_scripts'))
+if( ! function_exists('build_js'))
 {
-    function build_js_scripts($array = NULL)
+    function build_js($array = NULL)
     {
         if( ! count($array))
             return NULL;
@@ -15,9 +15,9 @@ if( ! function_exists('build_js_scripts'))
     }
 }
 
-if( ! function_exists('build_css_links'))
+if( ! function_exists('build_css'))
 {
-    function build_css_links($array = NULL)
+    function build_css($array = NULL)
     {
         if( ! count($array))
             return NULL;

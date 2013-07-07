@@ -6,6 +6,7 @@ class Insert extends CI_Controller
     {
         parent::__construct();
         $this->load->model('wiki');
+        $this->load->model('wiki_text');
         $this->load->model('mysqli_model');
     }
 
@@ -18,7 +19,13 @@ class Insert extends CI_Controller
     {
         $title = $this->input->post('title');
         $content = $this->_parse_wiki_content($this->wiki->get($title));
-        print_r($content);
+        $this->wiki_text->set_string($content);
+        $this->load->view('responces/confirm_new_event', array(
+            'country' => $this->wiki_text->get_item('country'),
+            'country' => $this->wiki_text->get_item('country'),
+            'country' => $this->wiki_text->get_item('country'),
+            'country' => $this->wiki_text->get_item('country')
+            ));
     }
 
     function suggest_event()

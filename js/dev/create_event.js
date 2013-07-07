@@ -1,7 +1,5 @@
 event_form_ids = ['name', 'start_year', 'type', 'srlimit'];
 
-
-
 $(document).ready(function()
 {
     $('#event_form').on('submit', function()
@@ -19,10 +17,10 @@ $(document).ready(function()
             url: server + "insert/suggest_event/",
             data: post_data,
             asyncr: false
-            }).done(function(msg)
+            }).done(function(html_code)
             {
                 hide_system_message();
-                $('#event_responce').html(msg);
+                $('#event_responce').html(html_code);
         });
         return false;
     });
@@ -36,11 +34,11 @@ $(document).ready(function()
             type: 'POST',
             url: server + 'insert/event/',
             data: post_data
-        }).done(function(html)
+        }).done(function(html_code)
         {
             hide_system_message();
-            $('body').append(html);
-            console.log(html);
+            $('#mask').fadeIn();
+            $('#modal').html(html_code).show();
         });
     });
 });
