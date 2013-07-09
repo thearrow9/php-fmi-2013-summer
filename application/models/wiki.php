@@ -41,8 +41,24 @@ class Wiki extends CI_Model
         $params['prop'] = 'revisions';
         $params['rvprop'] = 'content';
 
+        $data = $this->_get_responce($this->host . $this->_params_to_url($params));
+        echo $this->host . $this->_params_to_url($params);
+        $data = array_shift($data['query']['pages']);
+
+        return $data;#['revisions'][0]['*'];
+    }
+
+    function update_abbr()
+    {
+        $params = $this->params;
+        $params['titles'] = $this->_escape_string('Comparison of IOC, FIFA, and ISO 3166 country codes');
+
+        $params['prop'] = 'revisions';
+        $params['rvprop'] = 'content';
+
         return $this->_get_responce($this->host . $this->_params_to_url($params));
     }
+
 
     private function _params_to_url($array = array())
     {
@@ -55,7 +71,7 @@ class Wiki extends CI_Model
 
     private function _escape_string($string = NULL)
     {
-        return urlencode($string);
+        return($string);
     }
 
     private function _get_responce($url = NULL)

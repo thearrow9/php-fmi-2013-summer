@@ -1,7 +1,10 @@
 <?php if( ! defined('BASEPATH')) exit('No direct script access allowed');?>
 
 <div id="confirm_new_event">
-Държава: <?php print($country);?>
-
+<p>Домакин: <?=$host_country;?></p>
+<p>Шампион: <?=$champion;?></p>
+<p>Брой отбори: <?=$num_teams;?></p>
+<p>Дата: <?=$dates;?></p>
+<p>Отбори: <?php print_r($teams);?></p>
 
 </div>

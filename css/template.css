@@ -1,3 +1,6 @@
+body
+{
+}
 #mask
 {
     background: rgba(14, 13, 13, 0.6);
@@ -20,6 +23,7 @@
     margin-top: -150px;
     background: white;
     display: none;
+    overflow-y: scroll;
 }
 
 #responce
@@ -39,4 +43,9 @@
     background: yellow;
     text-align: center;
     color: black;
+}
+
+.clear
+{
+    clear: both;
 }

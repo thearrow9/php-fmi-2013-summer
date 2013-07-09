@@ -18,14 +18,24 @@ class Insert extends CI_Controller
     function event()
     {
         $title = $this->input->post('title');
-        $content = $this->_parse_wiki_content($this->wiki->get($title));
+        $content = $this->wiki->get($title);
         $this->wiki_text->set_string($content);
-        $this->load->view('responces/confirm_new_event', array(
-            'country' => $this->wiki_text->get_item('country'),
-            'country' => $this->wiki_text->get_item('country'),
-            'country' => $this->wiki_text->get_item('country'),
-            'country' => $this->wiki_text->get_item('country')
-            ));
+        $data = array(
+            'title' => $title,
+            'host_country' => $this->wiki_text->get_item('country'),
+            'champion' => $this->wiki_text->get_item('champion'),
+            'dates' => $this->wiki_text->get_item('dates'),
+            'num_teams' => $this->wiki_text->get_item('num_teams'),
+            'teams' => $this->wiki_text->get_teams()
+        );
+
+        if(count($data['teams']) < $data['num_teams'])
+        {
+            $data['optional_teams'] = $this->wiki_text->find_more_teams();
+            echo $content;
+        }
+
+        $this->load->view('responces/confirm_new_event', $data);
     }
 
     function suggest_event()
@@ -40,10 +50,11 @@ class Insert extends CI_Controller
         #$this->wiki->find((int) $start_year . $event_name);
     }
 
-    private function _parse_wiki_content($data = array())
+    function update_nations()
     {
-        $content = array_shift($data['query']['pages']);
-        return $content['revisions'][0]['*'];
+        print_r($this->wiki->get('Comparison of IOC, FIFA, and ISO 3166 country codes'));
     }
+
+
 }
 

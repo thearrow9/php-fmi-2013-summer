@@ -1,4 +1,23 @@
-input
+.fancy_form
 {
-    padding: 2px;
+    background-color: #f3f3f3;
+    border: solid 1px #a1a1a1;
+    padding: 10px;
+    width: 500px;
+}
+
+.fancy_form label, .fancy_form input, .fancy_form select
+{
+    display: block;
+    float: left;
+    margin: 2px 3px 5px;
+    padding: 3px;
+    width: 200px;
+}
+
+.fancy_form label
+{
+    text-align: right;
+    width: 170px;
+    padding-right: 15px;
 }

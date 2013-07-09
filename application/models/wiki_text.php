@@ -19,5 +19,15 @@ class Wiki_text
         preg_match('#' . $item . $this->basic_pattern . '#', $this->string, $matches);
         return count($matches) ? $matches[1] : NULL;
     }
-}
 
+    function get_teams()
+    {
+        preg_match_all('#\{\{fb\|([^\}]{4,})\}\}#', $this->string, $matches, PREG_PATTERN_ORDER);
+        return array_unique($matches[1]);
+    }
+
+    function find_more_teams()
+    {
+        #TODO soon;
+    }
+}

@@ -38,7 +38,8 @@ $(document).ready(function()
         {
             hide_system_message();
             $('#mask').fadeIn();
-            $('#modal').html(html_code).show();
+            console.log(html_code);
+            $('#modal').html(html_code).fadeIn();
         });
     });
 });
