@@ -20,7 +20,7 @@ $(document).ready(function()
             }).done(function(html_code)
             {
                 hide_system_message();
-                $('#event_responce').html(html_code);
+                $('#event_responce').html(html_code).data('year', post_data['start_year']);
         });
         return false;
     });
@@ -28,7 +28,7 @@ $(document).ready(function()
     $('body').on('click', '#event_suggestions p', function()
     {
         print_system_message('Прочитам статията...');
-        var post_data = { title: $(this).html() };
+        var post_data = { year: $('#event_responce').data('year'), title: $(this).html() };
         $.ajax
         ({
             type: 'POST',

@@ -2,14 +2,16 @@
 
 class Wiki extends CI_Model
 {
-    private $host;
+    private $host_api;
+    private $host_content;
     private $options = array();
     private $params = array();
 
     function __construct()
     {
         parent::__construct();
-        $this->host = 'http://wikipedia.org/w/api.php?';
+        $this->host_api = 'http://wikipedia.org/w/api.php?';
+        $this->host_content = 'http://en.wikipedia.org/w/index.php?';
         $this->options = array
         (
             'redirect' => 5
@@ -29,36 +31,19 @@ class Wiki extends CI_Model
         $params['srsearch'] = $this->_escape_string($string);
         $params['srnamespace'] = 0;
 
-        return $this->_get_responce($this->host . $this->_params_to_url($params));
+        return $this->_get_responce($this->host_api . $this->_params_to_url($params));
     }
 
-    function get($titles, $options = array())
+    function get($titles, $params = array(), $options = array())
     {
-        $this->options = array_merge($this->options, $options);
+        $options = array_merge($this->options, $options);
+        $params = array_merge($this->params, $params);
 
-        $params = $this->params;
-        $params['titles'] = $this->_escape_string($titles);
-        $params['prop'] = 'revisions';
-        $params['rvprop'] = 'content';
+        $params['title'] = $this->_escape_string($titles);
+        $params['action'] = 'raw';
 
-        $data = $this->_get_responce($this->host . $this->_params_to_url($params));
-        echo $this->host . $this->_params_to_url($params);
-        $data = array_shift($data['query']['pages']);
-
-        return $data;#['revisions'][0]['*'];
+        return file_get_contents($this->host_content . $this->_params_to_url($params));
     }
-
-    function update_abbr()
-    {
-        $params = $this->params;
-        $params['titles'] = $this->_escape_string('Comparison of IOC, FIFA, and ISO 3166 country codes');
-
-        $params['prop'] = 'revisions';
-        $params['rvprop'] = 'content';
-
-        return $this->_get_responce($this->host . $this->_params_to_url($params));
-    }
-
 
     private function _params_to_url($array = array())
     {
@@ -71,7 +56,7 @@ class Wiki extends CI_Model
 
     private function _escape_string($string = NULL)
     {
-        return($string);
+        return urlencode($string);
     }
 
     private function _get_responce($url = NULL)

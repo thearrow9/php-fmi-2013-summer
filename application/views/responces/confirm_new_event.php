@@ -5,6 +5,6 @@
 <p>Шампион: <?=$champion;?></p>
 <p>Брой отбори: <?=$num_teams;?></p>
 <p>Дата: <?=$dates;?></p>
-<p>Отбори: <?php print_r($teams);?></p>
-
+<p>Отбори: <?php #print_r($teams);?></p>
+<p>Нови отбори:<?php print_r($optional_abbrs);?></p>
 </div>

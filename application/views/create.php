@@ -14,7 +14,7 @@
     <label for="event_type">Тип на турнира</label>
     <select id="event_type">
         <option value="0">Национални отбори</option>
-        <option value="1">Клубни отбори</option>
+        <!--<option value="1">Клубни отбори</option>-->
     </select>
     <div class="clear"></div>
 
