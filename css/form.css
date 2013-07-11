@@ -2,7 +2,7 @@
 {
     background-color: #f3f3f3;
     border: solid 1px #a1a1a1;
-    padding: 10px;
+    padding: 5px;
     width: 500px;
 }
 
@@ -20,4 +20,9 @@
     text-align: right;
     width: 170px;
     padding-right: 15px;
+}
+
+.fancy_form p
+{
+    margin: 10px 0;
 }

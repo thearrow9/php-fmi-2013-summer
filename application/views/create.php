@@ -8,7 +8,7 @@
     <div class="clear"></div>
 
     <label for="event_start_year">Коя година започва?</label>
-    <input type="number" value="<?='2010';#date('Y');?>" step="1" min="1900" max="2100" id="event_start_year" />
+    <input type="number" value="<?='1994';#date('Y');?>" step="1" min="1900" max="2100" id="event_start_year" />
     <div class="clear"></div>
 
     <label for="event_type">Тип на турнира</label>

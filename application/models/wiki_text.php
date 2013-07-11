@@ -33,15 +33,20 @@ class Wiki_text
         return $matches;
     }
 
-    function find_more_teams()
+    function format_date($string, $year, &$start_date, &$end_date)
     {
-        #TODO soon;
+        preg_match_all('#(\d{1,2}\s[A-Z][a-z]+)#', $string, $matches, PREG_PATTERN_ORDER);
+
+        $start_date = $matches[0][0]. ' ' . $year;
+        $end_date = $matches[0][1] . ' ' . $year;
     }
 
-    function format_date($string, $year, & $start_date, & $end_date)
+    function parse_num_teams($string = NULL)
     {
-        $parts = exlode('-', $string);
-        $start_date = strtotime($parts[0] . ' ' . $year);
-        $end_date = strtotime($parts[1] . ' ' . $year);
+        return $string;
+        if(empty($string)) return 0;
+        preg_match('#[1-3][0-9]#', $string, $matches);
+        print_r($matches);
+        return (int) $matches[1];
     }
 }

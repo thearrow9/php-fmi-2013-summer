@@ -58,7 +58,7 @@ class Mysqli_model extends CI_Model
         $records = count($abbrs);
         if( ! $records) return array();
 
-        $sql = $this->_select_from_where('name', 'countries', 'abbr') . str_repeat("OR `abbr` = ?", $records - 1);
+        $sql = $this->_select_from_where('name, abbr', 'countries', 'abbr') . str_repeat("OR `abbr` = ?", $records - 1);
 
         $query = $this->CI->db->query($sql, $abbrs);
 
@@ -92,7 +92,7 @@ class Mysqli_model extends CI_Model
     private function _select_from_where($col, $table, $col_where)
     {
         return "
-            SELECT `$col`
+            SELECT $col
             FROM `$table`
             WHERE `$col_where` = ?
             ";

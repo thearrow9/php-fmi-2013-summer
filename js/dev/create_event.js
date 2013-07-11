@@ -14,7 +14,7 @@ $(document).ready(function()
         $.ajax(
         {
             type: "POST",
-            url: server + "insert/suggest_event/",
+            url: server + "ajax/suggest_event/",
             data: post_data,
             asyncr: false
             }).done(function(html_code)
@@ -32,7 +32,7 @@ $(document).ready(function()
         $.ajax
         ({
             type: 'POST',
-            url: server + 'insert/event/',
+            url: server + 'ajax/read_event/',
             data: post_data
         }).done(function(html_code)
         {
