@@ -32,7 +32,11 @@
 <p>Непознати за мен отбори:</p>
 <?php foreach($optional_abbrs as $abbr) : ?>
 
-<p><?=$abbr;?></p>
+<div id="new_<?=$abbr;?>">
+<label for="unknown_<?=$abbr;?>">Дали <strong><?=$abbr;?></strong> е </label><input type="text" id="unknown_<?=$abbr;?>" value="<?=array_shift($suggestions);?>" />
+</div>
+
+<div class="clear"></div>
 
 <?php endforeach; ?>
 

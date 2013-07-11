@@ -28,3 +28,14 @@ if( ! function_exists('build_css'))
         return $html;
     }
 }
+
+if( ! function_exists('build_html'))
+{
+    function build_html($array = NULL)
+    {
+        if( ! count($array))
+            return NULL;
+
+        return implode(' ', $array);
+    }
+}

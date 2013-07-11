@@ -49,4 +49,11 @@ class Wiki_text
         print_r($matches);
         return (int) $matches[1];
     }
+
+    function get_old_country_name($abbr = NULL)
+    {
+        if(empty($abbr)) return FALSE;
+        preg_match('#\|\{\{.*\[\[(.*)\]\].*' . $abbr . '.*#', $this->string, $matches);
+        return count($matches) ? $matches[1] : 'не открих съвпадения';
+    }
 }

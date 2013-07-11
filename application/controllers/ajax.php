@@ -8,7 +8,9 @@ class Ajax extends CI_Controller
     {
         parent::__construct();
         $this->post_data = $this->input->post(NULL, TRUE);
-        if( ! count($this->post_data))
+        $is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+
+        if( ! count($this->post_data) OR ! $is_ajax)
         {
             exit;
         }
@@ -40,6 +42,16 @@ class Ajax extends CI_Controller
         );
 
         $data['optional_abbrs'] = $this->mysqli_model->find_new_abbrs($abbrs);
+        if(count($data['optional_abbrs']))
+        {
+            $old_content = $this->wiki->get('Comparison of IOC, FIFA, and ISO 3166 country codes', array('section' => 1));
+            $this->wiki_text->set_string($old_content);
+            #print $old_content;
+            foreach($data['optional_abbrs'] as $old_name)
+            {
+                $data['suggestions'][] = $this->wiki_text->get_old_country_name($old_name);
+            }
+        }
 
         $this->load->view('responces/confirm_new_event', $data);
     }

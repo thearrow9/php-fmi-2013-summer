@@ -15,7 +15,9 @@
 <body>
     <div id="mask"></div>
     <div id="system_message"></div>
-    <?=$html;?>
     <div id="modal"></div>
+
+    <?=build_html($html);?>
+
 </body>
 </html>

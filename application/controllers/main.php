@@ -9,17 +9,16 @@ class Main extends CI_Controller
         parent::__construct();
         $this->load->helper('html');
         $this->load->helper('form');
+        $this->load->helper('url');
         $this->_set_defaults();
     }
 
-    function form()
+    function index()
     {
         $data = array();
-        $this->tmp_vars['html'] = $this->load->view('create', $data, TRUE);
-        $this->_push('js', 'dev/wiki.js');
-        $this->_push('js', 'dev/create_event.js');
-        $this->_push('css', 'template.css');
-        $this->_push('css', 'form.css');
+        $this->_push('html', $this->load->view('create', $data, TRUE));
+        $this->_push('js', array('dev/wiki.js', 'dev/create_event.js'));
+        $this->_push('css', array('template.css', 'form.css'));
         $this->_set_vars();
     }
 
@@ -44,7 +43,8 @@ class Main extends CI_Controller
 
     private function _push($array, $value)
     {
-        $this->tmp_vars[$array][] = $value;
+        foreach((array)$value as $val)
+            $this->tmp_vars[$array][] = $val;
     }
 }
 

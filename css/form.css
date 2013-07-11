@@ -6,6 +6,11 @@
     width: 500px;
 }
 
+.fancy_form input[type=image]
+{
+    width: auto;
+}
+
 .fancy_form label, .fancy_form input, .fancy_form select
 {
     display: block;
