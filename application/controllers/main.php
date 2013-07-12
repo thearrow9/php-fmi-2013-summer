@@ -16,7 +16,7 @@ class Main extends CI_Controller
     function index()
     {
         $data = array();
-        $this->_push('html', $this->load->view('create', $data, TRUE));
+        $this->_push('html', $this->load->view('new_event', $data, TRUE));
         $this->_push('js', array('dev/wiki.js', 'dev/create_event.js'));
         $this->_push('css', array('template.css', 'form.css'));
         $this->_set_vars();
@@ -27,8 +27,8 @@ class Main extends CI_Controller
         $this->tmp_vars['meta'] = array
         (
             array('name' => 'robots', 'content' => 'no-cache'),
-            array('name' => 'description', 'content' => 'My Great Site'),
-            array('name' => 'keywords', 'content' => 'love, passion, intrigue, deception'),
+            array('name' => 'description', 'content' => ''),
+            array('name' => 'keywords', 'content' => ''),
             array('name' => 'Content-type', 'content' => 'text/html; charset=utf-8', 'type' => 'equiv')
         );
         $this->tmp_vars['js'] = array('lib/jquery-2.0.2.min.js');

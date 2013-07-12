@@ -1,11 +1,5 @@
 event_form_ids = ['name', 'start_year', 'type', 'srlimit'];
 
-function insert_event(string)
-{
-    console.log(string);
-    return false;
-}
-
 $(document).ready(function()
 {
     $mask = $('#mask');
@@ -89,11 +83,10 @@ $(document).ready(function()
                         selected: true
                     }));
 
-                    increment_teams();
+                    increment_teams_count();
                     $('#new_' + abbr).fadeOut();
                 }
             }
-            console.log(status_code);
             print_system_message(message, 3000);
             return;
         });
@@ -113,14 +106,12 @@ $(document).ready(function()
             host_country: $form.find('#cf_host_country').val(),
             host_country_two: $form.find('#cf_host_country_two').val(),
             teams: teams,
-            title: $form.find('#cf_title').html(),
+            name: $form.find('#cf_title').html(),
             champion: $form.find('#cf_champion').val(),
             num_teams: $form.find('#cf_num_teams').val(),
-            start_time: $form.find('#cf_start_time').val(),
-            end_time: $form.find('#cf_end_time').val()
+            start_date: $form.find('#cf_start_time').val(),
+            end_date: $form.find('#cf_end_time').val()
         };
-
-        console.log(post_data);
 
         $.ajax
         ({

@@ -44,7 +44,7 @@ class Ajax extends CI_Controller
             return;
         }
         $this->post_data['teams'] = array_map('filter_post_var', $this->post_data['teams']);
-        print_r($this->post_data);
+        $this->post_data['name'] = $this->wiki_text->get_event_name($this->post_data['name']);
         echo $this->mysqli_model->insert_event($this->post_data);
     }
 
@@ -101,7 +101,7 @@ class Ajax extends CI_Controller
         $responce = $this->wiki->find($this->post_data['start_year'] . ' ' . $this->post_data['name'],
             array('srlimit' => $this->post_data['srlimit']));
 
-        $this->load->view('responces/create_event', array(
+        $this->load->view('responces/suggest_event', array(
             'num_rows' => $this->post_data['srlimit'],
             'rows'     => $responce['query']['search']
         ));

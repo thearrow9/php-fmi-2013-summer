@@ -56,4 +56,9 @@ class Wiki_text
         preg_match('#\|\{\{.*\[\[(.*)\]\].*' . $abbr . '.*#', $this->string, $matches);
         return count($matches) ? $matches[1] : NULL;
     }
+
+    function get_event_name($string)
+    {
+        return trim(preg_replace('#\d{4}#', NULL, $string));
+    }
 }

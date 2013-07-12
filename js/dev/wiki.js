@@ -22,7 +22,7 @@ function hide_system_message(time)
     $system_message.delay(time).hide();
 }
 
-function increment_teams()
+function increment_teams_count()
 {
     $up = $('#num_known');
     $down = $('#num_unknown');

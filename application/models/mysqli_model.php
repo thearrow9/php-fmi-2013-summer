@@ -17,15 +17,31 @@ class Mysqli_model extends CI_Model
     {
         if( ! count($data))
             return 0;
-return 1;
+        $teams = $data['teams'];
+        unset($data['teams']);
+
+        $data['start_date'] = $this->_time_to_sql_date($data['start_date']);
+        $data['end_date'] = $this->_time_to_sql_date($data['end_date']);
+
+        $data['host_country'] = $this->get_where('id', 'countries', 'name', $data['host_country']);
+        $data['champion'] = $this->get_where('id', 'countries', 'name', $data['champion']);
+        $data['num_teams'] = (int) $data['num_teams'];
+        ksort($data);
+
+        for ($i = 0; $i < $data['num_teams']; $i++)
+        {
+             $teams[$i] = $this->get_where('id', 'countries', 'name', $teams[$i]);
+        }
         $sql = "
             INSERT INTO `events`
-            (`name`, `start_date`, `end_date`, `type`, `running?`, `host_country`)
+            (`champion`, `end_date`, `host_country`, `name`, `num_teams`, `start_date`)
             VALUES
             (?, ?, ?, ?, ?, ?)
             ";
 
         $this->CI->db->query($sql, $data);
+        $this->_insert_participiants($teams, $this->CI->db->insert_id());
+        return 1;
     }
 
     function rewrite_countries($data = array())
@@ -128,8 +144,35 @@ return 1;
         $this->CI->db->query('SET FOREIGN_KEY_CHECKS=' . (int) $status);
     }
 
+    private function _time_to_sql_date($time)
+    {
+        return date('Y-m-d', $time);
+    }
+
+    function get_where($what, $table, $col, $value)
+    {
+        $sql = $this->_select_from_where($what, $table, $col);
+        $query = $this->CI->db->query($sql, $value);
+
+        if( ! $query->num_rows()) return NULL;
+        $result = $query->result_array();
+        return $result[0][$what];
+    }
+
     function __destruct()
     {
         $this->CI->db->close();
+    }
+    private function _insert_participiants($team_ids, $id)
+    {
+        $sql = "
+            INSERT INTO `participation`
+            (`event_id`, `team_id`) VALUES
+            (?, ?)
+            ";
+        foreach($team_ids as $team_id)
+        {
+            $query = $this->CI->db->query($sql, array($id, $team_id));
+        }
     }
 }
