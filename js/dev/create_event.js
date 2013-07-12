@@ -1,10 +1,17 @@
 event_form_ids = ['name', 'start_year', 'type', 'srlimit'];
 
+function insert_event(string)
+{
+    console.log(string);
+    return false;
+}
+
 $(document).ready(function()
 {
     $mask = $('#mask');
     $modal = $('#modal');
     $body = $('body');
+    $list_teams = $('#cf_teams');
 
     $('#event_form').on('submit', function()
     {
@@ -60,27 +67,56 @@ $(document).ready(function()
             data: { abbr: abbr, name: country_name  }
          }).done(function(status_code)
         {
-            if(status_code < 1)
+            switch(parseInt(status_code))
             {
-                print_system_message('Няма добавени записи', 3000);
-                return;
-            }
+                case 0:
+                {
+                    message = 'Не мога да запиша празно поле!';
+                    break;
+                }
+                case -1:
+                {
+                    message = 'Тези данни се дублират в таблицата';
+                    break;
+                }
+                default:
+                {
+                    message = 'Данните са добавени в таблицата';
 
-            $('#cf_teams').prepend($('<option>', {
-                value: abbr,
-                text : country_name,
-                selected: true
-            }));
-            increment_teams();
+                    $('#cf_teams').prepend($('<option>', {
+                        value: abbr,
+                        text : country_name,
+                        selected: true
+                    }));
+
+                    increment_teams();
+                    $('#new_' + abbr).fadeOut();
+                }
+            }
             console.log(status_code);
-            $('#new_' + abbr).fadeOut();
-            print_system_message('Записът е добавен', 3000);
+            print_system_message(message, 3000);
+            return;
         });
     });
 
     $body.on('submit', '#cf_event', function()
     {
-        
+        post_data =
+        {
+            
+        };
+
+
+        $.ajax
+        ({
+            type: 'POST',
+            url: server + 'ajax/insert_event',
+            data: post_data
+        }).done(function(msg)
+        {
+            console.log(msg);
+        });
+        return false;
     });
 
     $body.on('click', '#cf_reject', function()

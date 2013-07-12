@@ -24,10 +24,16 @@ class Ajax extends CI_Controller
     {
         if(empty($this->post_data['abbr']) or empty($this->post_data['name']))
         {
-            echo -1;
+            echo 0;
             return;
         }
-        echo $this->mysqli_model->insert_abbr($this->post_data);
+        echo $this->mysqli_model->insert_in_country($this->post_data);
+    }
+
+    function insert_event()
+    {
+        echo 1;
+        print_r($this->post_data);
     }
 
     function read_event()

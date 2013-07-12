@@ -78,6 +78,18 @@ class Mysqli_model extends CI_Model
         return $query->result_array();
     }
 
+    function get_abbr($name = NULL)
+    {
+        if(empty($name)) return NULL;
+
+        $sql = $this->_select_from_where('abbr', 'countries', 'name');
+
+        $query = $this->CI->db->query($sql, $name);
+
+        if( ! $query->num_rows()) return NULL;
+        return $query->result_array();
+    }
+
     function find_new_abbrs($abbrs = array())
     {
         $result = array();
@@ -89,9 +101,9 @@ class Mysqli_model extends CI_Model
         return $result;
     }
 
-    function insert_abbr($data = array())
+    function insert_in_country($data = array())
     {
-        if($this->get_country($data['abbr']) != NULL)
+        if($this->get_abbr($data['name']) != NULL or $this->get_country($data['abbr']) != NULL)
             return -1;
 
         $sql = "
@@ -99,6 +111,7 @@ class Mysqli_model extends CI_Model
             (`abbr`, `name`) VALUES
             (?, ?)
             ";
+        return 1;
         $this->CI->db->query($sql, $data);
         return $this->CI->db->affected_rows();
     }

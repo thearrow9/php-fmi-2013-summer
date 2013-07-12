@@ -60,6 +60,7 @@ strong
     background: yellow;
     text-align: center;
     color: black;
+    z-index: 3;
 }
 
 .clear

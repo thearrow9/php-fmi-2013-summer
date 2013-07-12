@@ -27,6 +27,7 @@
         <?php endforeach;?>
         </select>
         <div class="clear"></div>
+
 <?php if($num_opt_teams) : ?>
 
 <p>Непознати за мен отбори (<span id="num_unknown"><?=$num_opt_teams;?></span>)</p>
@@ -41,8 +42,8 @@
 
 <?php endforeach; ?>
 
-
 <?php endif;?>
+
         <div>
         <input type="submit" value="Съхрани" />
         <input type="button" value="Откажи" id="cf_reject" />
