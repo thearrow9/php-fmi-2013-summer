@@ -7,17 +7,19 @@ class Ajax extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->post_data = $this->input->post(NULL, TRUE);
+
+        $this->load->helper('security');
+        $this->load->model('wiki');
+        $this->load->model('wiki_text');
+        $this->load->model('mysqli_model');
+
+        $this->post_data = array_map('filter_post_var', $this->input->post(NULL, TRUE));
         #$is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
         #if( ! count($this->post_data) OR ! $is_ajax)
         #{
         #    exit;
         #}
-
-        $this->load->model('wiki');
-        $this->load->model('wiki_text');
-        $this->load->model('mysqli_model');
     }
 
     function insert_old_abbr()
@@ -32,8 +34,14 @@ class Ajax extends CI_Controller
 
     function insert_event()
     {
-        echo 1;
+        if(in_array(NULL, $this->post_data))
+        {
+            echo 0;
+            return;
+        }
+        $this->post_data['teams'] = array_map('filter_post_var', $this->post_data['teams']);
         print_r($this->post_data);
+        #echo $this->mysqli_model->insert_event($this->post_data);
     }
 
     function read_event()
@@ -59,6 +67,7 @@ class Ajax extends CI_Controller
             'title' => $title,
             'year' => $year,
             'host_country' => $this->wiki_text->get_item('country'),
+            'host_country_two' => $this->wiki_text->get_item('country2'),
             'champion' => $this->wiki_text->get_item('champion'),
             'start_date' => $start_date,
             'end_date' => $end_date,

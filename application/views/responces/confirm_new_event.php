@@ -3,10 +3,20 @@
 <div id="confirm_new_event">
     <form id="cf_event" class="fancy_form">
 
-        <p>Извлечена е следната информация за <strong><?=$title;?></strong>:</p>
+        <p>Извлечена е следната информация за <strong id="cf_title"><?=$title;?></strong>:</p>
+
+        <input type="hidden" id="cf_start_time" value="<?=strtotime($start_date);?>" />
+        <input type="hidden" id="cf_end_time" value="<?=strtotime($end_date);?>" />
 
         <label for="cf_host_country_">Домакин:</label><input type="text" readonly id="cf_host_country" value="<?=$host_country;?>" />
         <div class="clear"></div>
+
+        <?php if( ! empty($host_country_two)): ?>
+
+        <label for="cf_host_country_">Втори домакин:</label><input type="text" readonly id="cf_host_country_two" value="<?=$host_country_two;?>" />
+        <div class="clear"></div>
+
+        <?php endif;?>
 
         <label for="cf_champion">Шампион:</label><input type="text" readonly id="cf_champion" value="<?=$champion;?>" />
         <div class="clear"></div>

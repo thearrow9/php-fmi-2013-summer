@@ -111,7 +111,6 @@ class Mysqli_model extends CI_Model
             (`abbr`, `name`) VALUES
             (?, ?)
             ";
-        return 1;
         $this->CI->db->query($sql, $data);
         return $this->CI->db->affected_rows();
     }

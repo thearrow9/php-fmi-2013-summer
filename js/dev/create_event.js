@@ -11,7 +11,7 @@ $(document).ready(function()
     $mask = $('#mask');
     $modal = $('#modal');
     $body = $('body');
-    $list_teams = $('#cf_teams');
+    $cf_form = $('#cf_event');
 
     $('#event_form').on('submit', function()
     {
@@ -101,11 +101,26 @@ $(document).ready(function()
 
     $body.on('submit', '#cf_event', function()
     {
+        $form = $('#cf_event');
+
+        var teams = []; 
+        $form.find('#cf_teams :selected').each(function(i, selected){ 
+              teams[i] = $(selected).text(); 
+        });
+
         post_data =
         {
-            
+            host_country: $form.find('#cf_host_country').val(),
+            host_country_two: $form.find('#cf_host_country_two').val(),
+            teams: teams,
+            title: $form.find('#cf_title').html(),
+            champion: $form.find('#cf_champion').val(),
+            num_teams: $form.find('#cf_num_teams').val(),
+            start_time: $form.find('#cf_start_time').val(),
+            end_time: $form.find('#cf_end_time').val()
         };
 
+        console.log(post_data);
 
         $.ajax
         ({
