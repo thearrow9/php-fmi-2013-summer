@@ -1,5 +1,14 @@
 <?php if( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/*
+ *
+ * I will return/echo (int)
+ * -1 when data is duplicated
+ * 0  when data is empty
+ * n  when "n" rows are inserted into DB
+ *
+ */
+
 class Ajax extends CI_Controller
 {
     private $post_data = array();
@@ -14,12 +23,7 @@ class Ajax extends CI_Controller
         $this->load->model('mysqli_model');
 
         $this->post_data = array_map('filter_post_var', $this->input->post(NULL, TRUE));
-        #$is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-
-        #if( ! count($this->post_data) OR ! $is_ajax)
-        #{
-        #    exit;
-        #}
+        #if( ! count($this->post_data) or ! $this->_is_ajax_request()) exit;
     }
 
     function insert_old_abbr()
@@ -41,7 +45,7 @@ class Ajax extends CI_Controller
         }
         $this->post_data['teams'] = array_map('filter_post_var', $this->post_data['teams']);
         print_r($this->post_data);
-        #echo $this->mysqli_model->insert_event($this->post_data);
+        echo $this->mysqli_model->insert_event($this->post_data);
     }
 
     function read_event()
@@ -110,5 +114,8 @@ class Ajax extends CI_Controller
         echo $this->mysqli_model->rewrite_countries($this->wiki_text->get_teams_and_abbrs());
     }
 
-
+    private function _is_ajax_request()
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+    }
 }

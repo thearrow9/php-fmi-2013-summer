@@ -10,7 +10,6 @@ if( ! (function_exists('filter_post_var')))
         #        filter_post_var($value);
         #    return;
         #}
-        echo var_dump($var);
 
         if(empty($var)) return NULL;
 

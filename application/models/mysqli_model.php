@@ -16,8 +16,8 @@ class Mysqli_model extends CI_Model
     function insert_event($data = array())
     {
         if( ! count($data))
-            return FALSE;
-
+            return 0;
+return 1;
         $sql = "
             INSERT INTO `events`
             (`name`, `start_date`, `end_date`, `type`, `running?`, `host_country`)

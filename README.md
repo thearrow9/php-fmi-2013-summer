@@ -1,4 +1,4 @@
 Wikifootball
 ===================
 
-Fetch national football team results from Wikipedia
+Fetch national football events from Wikipedia using CodeIgniter and Wikimedia API.
