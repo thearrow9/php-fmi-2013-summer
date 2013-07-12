@@ -24,6 +24,7 @@ strong
     padding: 0;
     margin: 0;
     display: none;
+    z-index: 1;
 }
 
 #modal
@@ -39,6 +40,7 @@ strong
     display: none;
     overflow-y: scroll;
     overflow-x: hidden;
+    z-index: 2;
 }
 
 #responce

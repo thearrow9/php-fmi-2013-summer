@@ -8,16 +8,26 @@ class Ajax extends CI_Controller
     {
         parent::__construct();
         $this->post_data = $this->input->post(NULL, TRUE);
-        $is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+        #$is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
-        if( ! count($this->post_data) OR ! $is_ajax)
-        {
-            exit;
-        }
+        #if( ! count($this->post_data) OR ! $is_ajax)
+        #{
+        #    exit;
+        #}
 
         $this->load->model('wiki');
         $this->load->model('wiki_text');
         $this->load->model('mysqli_model');
+    }
+
+    function insert_old_abbr()
+    {
+        if(empty($this->post_data['abbr']) or empty($this->post_data['name']))
+        {
+            echo -1;
+            return;
+        }
+        echo $this->mysqli_model->insert_abbr($this->post_data);
     }
 
     function read_event()
@@ -30,6 +40,15 @@ class Ajax extends CI_Controller
 
         $this->wiki_text->format_date($this->wiki_text->get_item('dates'), $year, $start_date, $end_date);
 
+        $teams = $this->mysqli_model->get_countries_by_abbr($abbrs);
+        $optional_abbrs = $this->mysqli_model->find_new_abbrs($abbrs);
+        $num_teams = $this->wiki_text->get_item('num_teams');
+
+        if( ! is_numeric($num_teams))
+        {
+            $num_teams = count($teams) + count($optional_abbrs) . ' (?)';
+        }
+
         $data = array(
             'title' => $title,
             'year' => $year,
@@ -37,16 +56,18 @@ class Ajax extends CI_Controller
             'champion' => $this->wiki_text->get_item('champion'),
             'start_date' => $start_date,
             'end_date' => $end_date,
-            'num_teams' => $this->wiki_text->get_item('num_teams'),
-            'teams' => $this->mysqli_model->get_countries_by_abbr($abbrs)
+            'num_teams' => $num_teams,
+            'teams' => $teams,
+            'num_found_teams' => count($teams),
+            'num_opt_teams' => count($optional_abbrs)
         );
 
-        $data['optional_abbrs'] = $this->mysqli_model->find_new_abbrs($abbrs);
+        $data['optional_abbrs'] = $optional_abbrs;
         if(count($data['optional_abbrs']))
         {
             $old_content = $this->wiki->get('Comparison of IOC, FIFA, and ISO 3166 country codes', array('section' => 1));
             $this->wiki_text->set_string($old_content);
-            #print $old_content;
+
             foreach($data['optional_abbrs'] as $old_name)
             {
                 $data['suggestions'][] = $this->wiki_text->get_old_country_name($old_name);

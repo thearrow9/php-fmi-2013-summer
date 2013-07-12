@@ -22,7 +22,7 @@ class Wiki_text
 
     function get_fifa_abbrs()
     {
-        preg_match_all('#\{\{fb\|([A-Z]{3})\}\}#', $this->string, $matches, PREG_PATTERN_ORDER);
+        preg_match_all('#\{\{fb\|([A-Z]{3})#', $this->string, $matches, PREG_PATTERN_ORDER);
         return array_unique($matches[1]);
     }
 
@@ -54,6 +54,6 @@ class Wiki_text
     {
         if(empty($abbr)) return FALSE;
         preg_match('#\|\{\{.*\[\[(.*)\]\].*' . $abbr . '.*#', $this->string, $matches);
-        return count($matches) ? $matches[1] : 'не открих съвпадения';
+        return count($matches) ? $matches[1] : NULL;
     }
 }

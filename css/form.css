@@ -6,7 +6,7 @@
     width: 500px;
 }
 
-.fancy_form input[type=image]
+.fancy_form input[type=image], .fancy_form input.insert_abbr
 {
     width: auto;
 }

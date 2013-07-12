@@ -89,6 +89,20 @@ class Mysqli_model extends CI_Model
         return $result;
     }
 
+    function insert_abbr($data = array())
+    {
+        if($this->get_country($data['abbr']) != NULL)
+            return -1;
+
+        $sql = "
+            INSERT INTO `countries`
+            (`abbr`, `name`) VALUES
+            (?, ?)
+            ";
+        $this->CI->db->query($sql, $data);
+        return $this->CI->db->affected_rows();
+    }
+
     private function _select_from_where($col, $table, $col_where)
     {
         return "

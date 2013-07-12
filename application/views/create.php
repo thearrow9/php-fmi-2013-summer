@@ -22,7 +22,7 @@
     <input type="number" value="4" step="1" min="1" max="100" id="event_srlimit" />
     <div class="clear"></div>
 
-    <input type="image" src="<?=base_url('img/yes.png');?>" />
+    <input type="submit" value="Търси турнир" />
     <div class="clear"></div>
 </form>
 
