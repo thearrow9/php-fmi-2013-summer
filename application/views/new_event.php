@@ -1,6 +1,6 @@
 <?php if( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
-<form method="post" id="event_form" class="fancy_form">
+<form method="post" id="event_form" class="fancy_form rounded">
 
     <label for="event_name">Име на футболен турнир</label>
     <input type="list" required placeholder="пишете на латицина!" value="Fifa world cup" size="40" id="event_name" pattern="^[a-zA-Z\s]{3,}$" title="Името трябва да е поне 3 символа и на латиница." />

@@ -13,10 +13,25 @@ class Mysqli_model extends CI_Model
             $this->CI->load->database();
     }
 
+    private function _event_exists($name, $start_date)
+    {
+        $sql = "
+            SELECT id
+            FROM events
+            wHERE `name` = ? AND `start_date` = ?
+            ";
+
+        $query = $this->CI->db->query($sql, array($name, $start_date));
+        return (bool)$query->num_rows();
+    }
+
+
     function insert_event($data = array())
     {
         if( ! count($data))
             return 0;
+
+
         $teams = $data['teams'];
         unset($data['teams']);
 
@@ -26,6 +41,8 @@ class Mysqli_model extends CI_Model
         $data['host_country'] = $this->get_where('id', 'countries', 'name', $data['host_country']);
         $data['champion'] = $this->get_where('id', 'countries', 'name', $data['champion']);
         $data['num_teams'] = (int) $data['num_teams'];
+
+        if($this->_event_exists($data['name'], $data['start_date'])) return -1;
         ksort($data);
 
         for ($i = 0; $i < $data['num_teams']; $i++)
@@ -44,12 +61,35 @@ class Mysqli_model extends CI_Model
         return 1;
     }
 
+    private function _truncate($table_name)
+    {
+        $query = $this->CI->db->query("SHOW TABLES LIKE '" . $table_name . "'");
+        if( ! $query->num_rows()) 
+        {
+            $this->_create($table_name);
+            return;
+        }
+
+        $this->_foreigner_key(FALSE);
+        $this->CI->db->query('TRUNCATE TABLE `' . $table_name . '`');
+        $this->_foreigner_key(TRUE);
+    }
+
+    private function _create($table_name)
+    {
+        #TODO
+        #
+        return 0;
+    }
+
     function rewrite_countries($data = array())
     {
         $records = count($data[0]);
 
-        $this->_foreigner_key(FALSE);
-        $this->CI->db->query('TRUNCATE TABLE `countries`');
+        $this->_truncate('countries');
+        $this->_truncate('events');
+        $this->_truncate('participation');
+        #$this->_truncate('countries');
 
         $sql = "
             INSERT INTO `countries`
@@ -64,8 +104,6 @@ class Mysqli_model extends CI_Model
             if($this->CI->db->query($sql, array($data[0][$i], $data[1][$i])))
                 $success_queries++;
         }
-
-        $this->_foreigner_key(TRUE);
         return $success_queries;
     }
 

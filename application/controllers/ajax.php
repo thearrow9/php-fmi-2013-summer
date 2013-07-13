@@ -22,7 +22,7 @@ class Ajax extends CI_Controller
         $this->load->model('wiki_text');
         $this->load->model('mysqli_model');
 
-        $this->post_data = array_map('filter_post_var', $this->input->post(NULL, TRUE));
+        $this->post_data = array_map('filter_post_var', (array)$this->input->post(NULL, TRUE));
         #if( ! count($this->post_data) or ! $this->_is_ajax_request()) exit;
     }
 
@@ -107,7 +107,7 @@ class Ajax extends CI_Controller
         ));
     }
 
-    function update_nations()
+    function initialize()
     {
         $content = $this->wiki->get('Comparison of IOC, FIFA, and ISO 3166 country codes', array('section' => 0));
         $this->wiki_text->set_string($content);

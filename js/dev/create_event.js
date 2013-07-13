@@ -1,5 +1,43 @@
 event_form_ids = ['name', 'start_year', 'type', 'srlimit'];
 
+function get_message(status_code)
+{
+    switch(parseInt(status_code))
+    {
+        case 0:
+        {
+            message = 'Не мога да запиша празно поле!';
+            break;
+        }
+        case -1:
+        {
+            message = 'Тези данни се дублират в таблицата';
+            break;
+        }
+        default:
+        {
+            message = 'Данните са добавени в таблицата';
+        }
+    }
+    return message;
+}
+
+function init()
+{
+    print_system_message('Вмъквам данни за отборите');
+    $.ajax(
+    {
+        type: "POST",
+        url: server + "ajax/initialize",
+        data: {},
+        asyncr: false
+        }).done(function(status_code)
+        {
+            hide_system_message();
+            print_system_message(get_message(status_code) + ' (' + status_code + ' записа)', 3000);
+        });
+}
+
 $(document).ready(function()
 {
     $mask = $('#mask');
@@ -23,9 +61,9 @@ $(document).ready(function()
             data: post_data,
             asyncr: false
             }).done(function(html_code)
-            {
-                hide_system_message();
-                $('#event_responce').html(html_code).data('year', post_data['start_year']);
+        {
+            hide_system_message();
+            $('#event_responce').html(html_code).data('year', post_data['start_year']);
         });
         return false;
     });
@@ -61,44 +99,30 @@ $(document).ready(function()
             data: { abbr: abbr, name: country_name  }
          }).done(function(status_code)
         {
-            switch(parseInt(status_code))
+            if(status_code == 1)
             {
-                case 0:
-                {
-                    message = 'Не мога да запиша празно поле!';
-                    break;
-                }
-                case -1:
-                {
-                    message = 'Тези данни се дублират в таблицата';
-                    break;
-                }
-                default:
-                {
-                    message = 'Данните са добавени в таблицата';
+                $('#cf_teams').addClass('bordered').prepend($('<option>', {
+                    value: abbr,
+                    text : country_name,
+                    selected: true
+                }));
 
-                    $('#cf_teams').prepend($('<option>', {
-                        value: abbr,
-                        text : country_name,
-                        selected: true
-                    }));
-
-                    increment_teams_count();
-                    $('#new_' + abbr).fadeOut();
-                }
+                increment_teams_count();
+                $('#new_' + abbr).fadeOut();
             }
+            message = get_message(status_code);
             print_system_message(message, 3000);
-            return;
-        });
+         });
+        return;
     });
 
     $body.on('submit', '#cf_event', function()
     {
         $form = $('#cf_event');
 
-        var teams = []; 
-        $form.find('#cf_teams :selected').each(function(i, selected){ 
-              teams[i] = $(selected).text(); 
+        var teams = [];
+        $form.find('#cf_teams :selected').each(function(i, selected){
+              teams[i] = $(selected).text();
         });
 
         post_data =
@@ -118,9 +142,10 @@ $(document).ready(function()
             type: 'POST',
             url: server + 'ajax/insert_event',
             data: post_data
-        }).done(function(msg)
+        }).done(function(status_code)
         {
-            console.log(msg);
+            message = get_message(status_code);
+            print_system_message(message, 3000);
         });
         return false;
     });

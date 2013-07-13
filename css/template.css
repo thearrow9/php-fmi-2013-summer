@@ -55,15 +55,27 @@ strong
     position: fixed;
     top: 0;
     left: 50%;
-    margin-left: -100px;
-    width: 200px;
-    background: yellow;
+    margin-left: -120px;
+    width: 240px;
+    background: rgb(255, 236, 174);
+    padding: 3px 5px;
+    border: 1px solid orange;
     text-align: center;
     color: black;
     z-index: 3;
 }
 
+.bordered
+{
+    border-color: orange;
+}
+
 .clear
 {
     clear: both;
+}
+
+.rounded
+{
+    border-radius: .4em;
 }
